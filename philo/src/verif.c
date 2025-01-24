@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:12:00 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 15:32:10 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:05:56 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	verif_eat(t_philo_infos *infos)
 	int	i;
 	int	count;
 
+	if (infos->nb_eat == -1)
+		return (0);
 	i = 0;
 	count = 0;
 	while (i < infos->nb_philo)
