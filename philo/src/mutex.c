@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:26:31 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 14:44:39 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:03:16 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	init_mutex(t_philo_infos *infos)
 	while (i < infos->nb_philo)
 	{
 		if (pthread_mutex_init(&infos->forks[i], NULL))
-			return (clean_mutex_err(infos, i, 0);
+			return (clean_mutex_err(infos, i, 0));
 		if (pthread_mutex_init(&infos->philos[i].lock_eat, NULL))
-			return (clean_mutex_err(infos, i, 1);
+			return (clean_mutex_err(infos, i, 1));
 		i++;
 	}
 	return (0);
@@ -56,4 +56,10 @@ void	clean_mutex(t_philo_infos *infos)
 		pthread_mutex_destroy(&infos->philos[i].lock_eat);
 		i++;
 	}
+}
+
+void	cleanup_thread_mutex(t_philo_infos *infos)
+{
+	infos->started = 0;
+	clean_mutex(infos);
 }

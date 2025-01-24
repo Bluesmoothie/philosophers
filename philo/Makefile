@@ -11,7 +11,6 @@ INCLUDE 		=	-I include
 #			SRC
 
 SRC_FILES		=	philo	\
-					cleanup	\
 					mutex	\
 					print	\
 					thread	\

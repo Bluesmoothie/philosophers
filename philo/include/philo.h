@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 14:56:01 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:02:10 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # define MESSAGE_THINK	"is thinking\n"
 # define MESSAGE_FORK	"has taken a fork\n"
 
-typedef struct timeval	t_timeval;
+typedef struct timeval			t_timeval;
+typedef struct s_philo_infos	t_philo_infos;
 
 typedef struct s_philo
 {
@@ -65,31 +66,32 @@ enum e_error_codes
 };
 
 // philo.c
-int		verify_arg(char *arg);
-t_philo	*init_struct(int argc, char **argv);
-int		free_error(t_philo_infos *infos, int error_code);
-int		error(int error_code);
+int				verify_arg(char *arg);
+t_philo_infos	*init_struct(int argc, char **argv);
+int				free_error(t_philo_infos *infos, int error_code);
+int				error(int error_code);
 
 // mutex.c
-int		init_mutex(t_philo_infos *infos);
-int		clean_mutex_err(t_philo_infos *infos, int max, int state);
-void	clean_mutex(t_philo_infos *infos);
+int				init_mutex(t_philo_infos *infos);
+int				clean_mutex_err(t_philo_infos *infos, int max, int state);
+void			clean_mutex(t_philo_infos *infos);
+void			cleanup_thread_mutex(t_philo_infos *infos);
 
 // print.c
-void	message_printer(int id, char *message);
+void			message_printer(int id, char *message);
 
 // thread.c
-int		create_threads(t_philo_infos *infos);
-void	init_philo(int i, t_philo_infos *infos);
-void	*philo_thread(void *arg);
+int				create_threads(t_philo_infos *infos);
+void			init_philo(int i, t_philo_infos *infos);
+void			*philo_thread(void *arg);
 
 // utils.c
-int		ft_atoi(const char *nptr);
-long	ft_atol(const char *nptr);
-size_t	ft_strlen(const char *s);
+int				ft_atoi(const char *nptr);
+long			ft_atol(const char *nptr);
+size_t			ft_strlen(const char *s);
 
 // verif.c
-int		verif_eat(t_philo_infos *infos);
-int		verif_die(t_philo_infos *infos);
+int				verif_eat(t_philo_infos *infos);
+int				verif_die(t_philo_infos *infos);
 
 #endif
