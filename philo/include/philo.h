@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/23 17:48:32 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/24 14:56:01 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@
 # include <pthread.h>
 # include <limits.h>
 
-# define MAX_PHILO 256
+# define MAX_PHILO		256
 
-typedef struct timeval t_timeval;
+# define MESSAGE_DIED	"died\n"
+# define MESSAGE_EAT	"is eating\n"
+# define MESSAGE_SLEEP	"is sleeping\n"
+# define MESSAGE_THINK	"is thinking\n"
+# define MESSAGE_FORK	"has taken a fork\n"
+
+typedef struct timeval	t_timeval;
 
 typedef struct s_philo
 {
@@ -31,9 +37,10 @@ typedef struct s_philo
 	int				r_fork;
 	int				eated_times;
 	t_timeval		eated_at;
+	pthread_mutex_t	lock_eat;
+	pthread_t		thread;
 	t_philo_infos	*infos;
 }	t_philo;
-
 
 typedef struct s_philo_infos
 {
@@ -50,11 +57,11 @@ typedef struct s_philo_infos
 
 enum e_error_codes
 {
-	NB_ARG_ERROR = 1,
-	MALLOC_ERROR = 2,
-	ARG_ERROR = 3,
-	MUTEX_ERROR = 4,
-	THREAD_ERROR = 5
+	NB_ARG_ERROR,
+	MALLOC_ERROR,
+	ARG_ERROR,
+	MUTEX_ERROR,
+	THREAD_ERROR
 };
 
 // philo.c
@@ -65,14 +72,24 @@ int		error(int error_code);
 
 // mutex.c
 int		init_mutex(t_philo_infos *infos);
+int		clean_mutex_err(t_philo_infos *infos, int max, int state);
+void	clean_mutex(t_philo_infos *infos);
+
+// print.c
+void	message_printer(int id, char *message);
 
 // thread.c
 int		create_threads(t_philo_infos *infos);
+void	init_philo(int i, t_philo_infos *infos);
 void	*philo_thread(void *arg);
 
 // utils.c
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);
 size_t	ft_strlen(const char *s);
+
+// verif.c
+int		verif_eat(t_philo_infos *infos);
+int		verif_die(t_philo_infos *infos);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/23 17:49:22 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/24 14:47:31 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	create_threads(t_philo_infos *infos)
 	while (i < infos->nb_philo)
 	{
 		init_philo(i, infos);
-		if (pthread_create(&infos->philos[i]->thread, NULL, philo_thread, infos->philos[i]))
+		if (pthread_create(&infos->philos[i]->thread,
+			NULL, philo_thread, infos->philos[i]))
 		{
 			infos->err = 1;
 			return (1);
@@ -46,7 +47,9 @@ void	*philo_thread(void *arg)
 	while (!philo->infos->started)
 		if (philo->infos->err)
 			return (NULL);
+	pthread_mutex_lock(&philo->lock_eat);
 	while (gettimeofday(&philo->eated_at, NULL) == -1);
+	pthread_mutex_unlock(&philo->lock_eat);
 	while (philo->infos->started)
 	{
 	}
