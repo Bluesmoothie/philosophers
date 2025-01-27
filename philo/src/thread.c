@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 15:31:27 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:35:51 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,55 @@ void	*philo_thread(void *arg)
 	pthread_mutex_unlock(&philo->lock_eat);
 	while (philo->infos->started)
 	{
+		philo_eat(philo);
+		if (philo->infos->started == 0)
+			break ;
+		message_printer(philo->id, MESSAGE_SLEEP, philo->infos);
+		philo_sleep(philo->infos->time_to_sleep);
+		if (philo->infos->started == 0)
+			break ;
+		message_printer(philo->id, MESSAGE_THINK, philo->infos);
 	}
 	return (NULL);
+}
+
+void	philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->infos->eating);
+	pthread_mutex_lock(&philo->infos->forks[philo->l_fork]);
+	message_printer(philo->id, MESSAGE_FORK, philo->infos);
+	if (philo->infos->nb_philo > 1)
+	{
+		pthread_mutex_lock(&philo->infos->forks[philo->r_fork]);
+		message_printer(philo->id, MESSAGE_FORK, philo->infos);
+	}
+	pthread_mutex_lock(&philo->lock_eat);
+	message_printer(philo->id, "is eating\n", philo->infos);
+	philo_sleep(philo->infos->time_to_eat);
+	philo->eated_times++;
+	while (gettimeofday(&philo->eated_at, NULL) == -1)
+		;
+	pthread_mutex_unlock(&philo->lock_eat);
+	pthread_mutex_unlock(&philo->infos->forks[philo->l_fork]);
+	if (philo->infos->nb_philo > 1)
+		pthread_mutex_unlock(&philo->infos->forks[philo->r_fork]);
+	pthread_mutex_unlock(&philo->infos->eating);
+}
+
+void	philo_sleep(int time)
+{
+	t_timeval	start;
+	t_timeval	now;
+
+	while (gettimeofday(&start, NULL) == -1)
+		;
+	while (1)
+	{
+		while (gettimeofday(&now, NULL) == -1)
+			;
+		if ((now.tv_sec - start.tv_sec) * 1000
+			+ (now.tv_usec - start.tv_usec) / 1000 >= time)
+			break ;
+		usleep(100);
+	}
 }

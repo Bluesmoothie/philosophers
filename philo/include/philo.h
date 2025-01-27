@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 15:02:10 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:37:19 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_philo_infos
 	int				err;
 	t_philo			philos[MAX_PHILO];
 	pthread_mutex_t	forks[MAX_PHILO];
+	pthread_mutex_t	eating;
 }	t_philo_infos;
 
 enum e_error_codes
@@ -78,12 +79,15 @@ void			clean_mutex(t_philo_infos *infos);
 void			cleanup_thread_mutex(t_philo_infos *infos);
 
 // print.c
-void			message_printer(int id, char *message);
+void			message_printer(int id, char *message, t_philo_infos *philo);
+void			death_printer(int id);
 
 // thread.c
 int				create_threads(t_philo_infos *infos);
 void			init_philo(int i, t_philo_infos *infos);
 void			*philo_thread(void *arg);
+void			philo_eat(t_philo *philo);
+void			philo_sleep(int time);
 
 // utils.c
 int				ft_atoi(const char *nptr);

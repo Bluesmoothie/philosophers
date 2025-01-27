@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:12:00 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/24 16:05:56 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:37:05 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ int	verif_die(t_philo_infos *infos)
 		while (gettimeofday(&now, NULL) == -1)
 			;
 		pthread_mutex_lock(&infos->philos[i].lock_eat);
-		if (now.tv_usec - infos->philos[i].eated_at.tv_usec
-			> infos->time_to_die)
+		if ((now.tv_sec - infos->philos[i].eated_at.tv_sec) * 1000 + (now.tv_usec - infos->philos[i].eated_at.tv_usec) / 1000 > infos->time_to_die)
 		{
 			pthread_mutex_unlock(&infos->philos[i].lock_eat);
-			message_printer(infos->philos[i].id, MESSAGE_DIED);
+			death_printer(infos->philos[i].id);
 			return (1);
 		}
 		pthread_mutex_unlock(&infos->philos[i].lock_eat);
