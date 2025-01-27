@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 16:43:29 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:15:30 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ size_t			ft_strlen(const char *s);
 // verif.c
 void			verif_eat(t_philo_infos *infos);
 void			verif_die(t_philo_infos *infos);
+void			verifs(t_philo_infos *infos);
 
 #endif

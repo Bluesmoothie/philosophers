@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:12:00 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 16:46:28 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:15:21 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	verif_eat(t_philo_infos *infos)
 	int	i;
 	int	count;
 
-	if (infos->nb_eat == -1)
-		return ;
 	i = 0;
 	count = 0;
 	while (i < infos->nb_philo)
@@ -59,4 +57,11 @@ void	verif_die(t_philo_infos *infos)
 		pthread_mutex_unlock(&infos->philos[i].lock_eat);
 		i++;
 	}
+}
+
+void	verifs(t_philo_infos *infos)
+{
+	if (infos->nb_eat != -1)
+		verif_eat(infos);
+	verif_die(infos);
 }

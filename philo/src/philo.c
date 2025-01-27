@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:51:36 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 16:43:40 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:19:08 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	main(int argc, char **argv)
 	infos->started = 1;
 	while (infos->started)
 	{
-		verif_eat(infos);
-		verif_die(infos);
+		usleep(1000);
+		verifs(infos);
 	}
 	cleanup_thread_mutex(infos);
 	free(infos);
