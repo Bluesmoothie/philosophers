@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 17:12:47 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:21:58 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init_philo(int i, t_philo_infos *infos)
 	infos->philos[i].r_fork = (i + 1) % infos->nb_philo;
 	infos->philos[i].eated_times = 0;
 	infos->philos[i].infos = infos;
+	while (gettimeofday(&infos->philos[i].eated_at, NULL) == -1)
+		;
 }
 
 void	*philo_thread(void *arg)
@@ -46,12 +48,12 @@ void	*philo_thread(void *arg)
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->lock_eat);
-	while (gettimeofday(&philo->eated_at, NULL) == -1)
-		;
-	pthread_mutex_unlock(&philo->lock_eat);
 	while (!philo->infos->started)
 		if (philo->infos->err)
 			return (NULL);
+	while (gettimeofday(&philo->eated_at, NULL) == -1)
+		;
+	pthread_mutex_unlock(&philo->lock_eat);
 	if (philo->id % 2)
 		usleep(100);
 	while (philo->infos->started)
