@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 16:35:51 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:39:56 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	*philo_thread(void *arg)
 	while (gettimeofday(&philo->eated_at, NULL) == -1)
 		;
 	pthread_mutex_unlock(&philo->lock_eat);
+	if (philo->id % 2)
+		usleep(100);
 	while (philo->infos->started)
 	{
 		philo_eat(philo);

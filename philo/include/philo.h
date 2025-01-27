@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 16:37:19 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:43:29 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ long			ft_atol(const char *nptr);
 size_t			ft_strlen(const char *s);
 
 // verif.c
-int				verif_eat(t_philo_infos *infos);
-int				verif_die(t_philo_infos *infos);
+void			verif_eat(t_philo_infos *infos);
+void			verif_die(t_philo_infos *infos);
 
 #endif
