@@ -24,6 +24,7 @@ SRC_FILES		=	philo	\
 
 SRC 			= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 			= 	$(addprefix $(BUILD_DIR), $(addsuffix .o, $(SRC_FILES)))
+DEPS 			= 	$(addprefix $(BUILD_DIR), $(addsuffix .d, $(SRC_FILES)))
 
 #			RULES
 
@@ -32,11 +33,13 @@ all				:	$(NAME)
 $(NAME)			:	$(BUILD_DIR) $(OBJ)
 				$(CC) $(CFLAGS) $(OBJ) -lpthread -o $(NAME)
 
-$(BUILD_DIR)		:
+$(BUILD_DIR)	:
 				mkdir -p $(BUILD_DIR)
 
 $(BUILD_DIR)%.o	: 	$(SRC_DIR)%.c
 				$(CC) $(CFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 norme			:
 				norminette $(SRC_DIR) $(INCLUDE)
