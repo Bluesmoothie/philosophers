@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:46:59 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/23 17:00:36 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/28 14:09:54 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,21 @@ size_t	ft_strlen(const char *s)
 	while (s[len] != '\0')
 		len++;
 	return (len);
+}
+
+void	philo_start(t_philo_infos *infos)
+{
+	while (gettimeofday(&infos->start, NULL) == -1)
+		;
+	infos->started = 1;
+}
+
+long int	calc_timestamp(t_timeval start)
+{
+	t_timeval	now;
+
+	while (gettimeofday(&now, NULL) == -1)
+		;
+	return ((now.tv_sec - start.tv_sec) * 1000
+		+ (now.tv_usec - start.tv_usec) / 1000);
 }

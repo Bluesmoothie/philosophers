@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:12:00 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 17:15:21 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/28 14:15:21 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	verif_die(t_philo_infos *infos)
 		{
 			pthread_mutex_unlock(&infos->philos[i].lock_eat);
 			infos->started = 0;
-			death_printer(infos->philos[i].id);
+			death_printer(infos->philos[i].id, infos);
 			return ;
 		}
 		pthread_mutex_unlock(&infos->philos[i].lock_eat);

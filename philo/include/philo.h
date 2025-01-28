@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 17:15:30 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/28 14:15:12 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_philo_infos
 	int				nb_eat;
 	int				started;
 	int				err;
+	t_timeval		start;
 	t_philo			philos[MAX_PHILO];
 	pthread_mutex_t	forks[MAX_PHILO];
 	pthread_mutex_t	eating;
@@ -80,7 +81,7 @@ void			cleanup_thread_mutex(t_philo_infos *infos);
 
 // print.c
 void			message_printer(int id, char *message, t_philo_infos *philo);
-void			death_printer(int id);
+void			death_printer(int id, t_philo_infos *philo);
 
 // thread.c
 int				create_threads(t_philo_infos *infos);
@@ -93,6 +94,8 @@ void			philo_sleep(int time);
 int				ft_atoi(const char *nptr);
 long			ft_atol(const char *nptr);
 size_t			ft_strlen(const char *s);
+void			philo_start(t_philo_infos *infos);
+long int		calc_timestamp(t_timeval start);
 
 // verif.c
 void			verif_eat(t_philo_infos *infos);
