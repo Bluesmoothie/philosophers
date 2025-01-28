@@ -5,8 +5,13 @@ NAME			=   philo
 #			GCC
 
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror $(INCLUDE)
-INCLUDE 		=	-I include
+CFLAGS			=	-Wall -Wextra -Werror -MMD -MP -I $(INCLUDE)
+
+#			COMMON
+
+BUILD_DIR		=	.build/
+SRC_DIR			=	src/
+INCLUDE 		=	include/
 
 #			SRC
 
@@ -18,33 +23,28 @@ SRC_FILES		=	philo	\
 					verif	\
 
 SRC 			= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ 			= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-
-#			COMMON
-
-OBJ_DIR			=	obj/
-SRC_DIR			=	src/
+OBJ 			= 	$(addprefix $(BUILD_DIR), $(addsuffix .o, $(SRC_FILES)))
 
 #			RULES
 
 all				:	$(NAME)
 
-$(NAME)			:	$(OBJ_DIR) $(OBJ)
+$(NAME)			:	$(BUILD_DIR) $(OBJ)
 				$(CC) $(CFLAGS) $(OBJ) -lpthread -o $(NAME)
 
-$(OBJ_DIR)		:
-				mkdir $(OBJ_DIR)
+$(BUILD_DIR)		:
+				mkdir -p $(BUILD_DIR)
 
-$(OBJ_DIR)%.o	: 	$(SRC_DIR)%.c include/philo.h
+$(BUILD_DIR)%.o	: 	$(SRC_DIR)%.c
 				$(CC) $(CFLAGS) -c $< -o $@
 
 norme			:
-				norminette $(SRC_DIR) include
+				norminette $(SRC_DIR) $(INCLUDE)
 
 clean			:
-				$(RM) -rf $(OBJ_DIR)
+				rm -rf $(BUILD_DIR)
 
 fclean			:	clean
-				$(RM) -f $(NAME)
+				rm -f $(NAME)
 
 re				:	fclean all
