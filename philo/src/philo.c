@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:51:36 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/07 14:36:45 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/10 20:08:06 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	if (!infos)
 		return (error(MALLOC_ERROR));
 	if (init_mutex(infos))
-			return (free_error(infos, MUTEX_ERROR));
+		return (free_error(infos, MUTEX_ERROR));
 	if (create_threads(infos))
 		return (free_error(infos, THREAD_ERROR));
 	philo_start(infos);
