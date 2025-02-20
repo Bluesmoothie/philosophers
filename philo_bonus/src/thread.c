@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/03 18:48:52 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:12:19 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	*philo_thread(void *arg)
 	while (!philo->infos->started)
 		if (philo->infos->err)
 			return (NULL);
-	sem_wait(philo->infos->eating);
+	sem_wait(philo->eating);
 	while (gettimeofday(&philo->eated_at, NULL) == -1)
 		;
-	sem_post(philo->infos->eating);
+	sem_post(philo->eating);
 	if (philo->id % 2)
 		usleep(100);
 	while (philo->infos->started)
@@ -72,23 +72,19 @@ void	*philo_thread(void *arg)
 
 void	philo_eat(t_philo *philo)
 {
-	sem_wait(philo->infos->eating);
 	sem_wait(philo->infos->forks);
 	message_printer(philo->id, MESSAGE_FORK, philo->infos);
-	if (philo->infos->nb_philo > 1)
-	{
-		sem_wait(philo->infos->forks);
-		message_printer(philo->id, MESSAGE_FORK, philo->infos);
-	}
+	sem_wait(philo->infos->forks);
+	message_printer(philo->id, MESSAGE_FORK, philo->infos);
 	message_printer(philo->id, "is eating\n", philo->infos);
-	philo_sleep(philo->infos->time_to_eat);
 	philo->eated_times++;
+	sem_wait(philo->eating);
 	while (gettimeofday(&philo->eated_at, NULL) == -1)
 		;
+	sem_post(philo->eating);
+	philo_sleep(philo->infos->time_to_eat);
 	sem_post(philo->infos->forks);
-	if (philo->infos->nb_philo > 1)
-		sem_post(philo->infos->forks);
-	sem_post(philo->infos->eating);
+	sem_post(philo->infos->forks);
 }
 
 void	philo_sleep(int time)

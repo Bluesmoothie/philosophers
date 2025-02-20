@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/28 14:15:12 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:18:20 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_philo_infos
 	t_timeval		start;
 	t_philo			philos[MAX_PHILO];
 	pthread_mutex_t	forks[MAX_PHILO];
-	pthread_mutex_t	eating;
 }	t_philo_infos;
 
 enum e_error_codes
@@ -101,5 +100,6 @@ long int		calc_timestamp(t_timeval start);
 void			verif_eat(t_philo_infos *infos);
 void			verif_die(t_philo_infos *infos);
 void			verifs(t_philo_infos *infos);
+int				verif_time(t_philo_infos *infos, t_timeval last);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/27 17:21:58 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:09:03 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	*philo_thread(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->lock_eat);
 	while (!philo->infos->started)
 		if (philo->infos->err)
 			return (NULL);
+	pthread_mutex_lock(&philo->lock_eat);
 	while (gettimeofday(&philo->eated_at, NULL) == -1)
 		;
 	pthread_mutex_unlock(&philo->lock_eat);
@@ -72,25 +72,24 @@ void	*philo_thread(void *arg)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->infos->eating);
 	pthread_mutex_lock(&philo->infos->forks[philo->l_fork]);
 	message_printer(philo->id, MESSAGE_FORK, philo->infos);
-	if (philo->infos->nb_philo > 1)
+	if (philo->infos->started == 0)
 	{
-		pthread_mutex_lock(&philo->infos->forks[philo->r_fork]);
-		message_printer(philo->id, MESSAGE_FORK, philo->infos);
+		pthread_mutex_unlock(&philo->infos->forks[philo->l_fork]);
+		return ;
 	}
-	pthread_mutex_lock(&philo->lock_eat);
+	pthread_mutex_lock(&philo->infos->forks[philo->r_fork]);
+	message_printer(philo->id, MESSAGE_FORK, philo->infos);
 	message_printer(philo->id, "is eating\n", philo->infos);
-	philo_sleep(philo->infos->time_to_eat);
+	pthread_mutex_lock(&philo->lock_eat);
 	philo->eated_times++;
 	while (gettimeofday(&philo->eated_at, NULL) == -1)
 		;
 	pthread_mutex_unlock(&philo->lock_eat);
+	philo_sleep(philo->infos->time_to_eat);
 	pthread_mutex_unlock(&philo->infos->forks[philo->l_fork]);
-	if (philo->infos->nb_philo > 1)
-		pthread_mutex_unlock(&philo->infos->forks[philo->r_fork]);
-	pthread_mutex_unlock(&philo->infos->eating);
+	pthread_mutex_unlock(&philo->infos->forks[philo->r_fork]);
 }
 
 void	philo_sleep(int time)

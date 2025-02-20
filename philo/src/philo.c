@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:51:36 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/10 20:08:06 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:22:39 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	philo_start(infos);
 	while (infos->started)
 	{
-		usleep(1000);
+		usleep(100);
 		verifs(infos);
 	}
 	cleanup_thread_mutex(infos);
