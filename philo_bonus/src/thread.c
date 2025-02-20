@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/20 14:12:19 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:29:24 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,8 @@ void	*philo_thread(void *arg)
 	while (!philo->infos->started)
 		if (philo->infos->err)
 			return (NULL);
-	sem_wait(philo->eating);
-	while (gettimeofday(&philo->eated_at, NULL) == -1)
-		;
-	sem_post(philo->eating);
 	if (philo->id % 2)
-		usleep(100);
+		usleep(500);
 	while (philo->infos->started)
 	{
 		philo_eat(philo);
