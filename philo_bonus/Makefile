@@ -18,6 +18,7 @@ INCLUDE 		=	include/
 SRC_FILES		=	philo		\
 					print		\
 					semaphore 	\
+					solo		\
 					thread		\
 					utils		\
 					verif		\

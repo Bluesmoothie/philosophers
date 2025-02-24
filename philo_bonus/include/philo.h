@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:03 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/20 14:08:44 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/24 08:39:13 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ void			death_printer(int id, t_philo_infos *philo);
 int				init_semaphores(t_philo_infos *infos);
 int				deinit_semaphores(t_philo_infos *infos);
 void			clean_semaphores(t_philo_infos *infos);
+
+// solo.c
+void			philo_solo(t_philo *philo);
 
 // thread.c
 int				create_threads(t_philo_infos *infos);

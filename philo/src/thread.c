@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/20 14:09:03 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/24 08:33:32 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	*philo_thread(void *arg)
 
 void	philo_eat(t_philo *philo)
 {
+	if (philo->infos->nb_philo == 1)
+		return (philo_solo(philo));
 	pthread_mutex_lock(&philo->infos->forks[philo->l_fork]);
 	message_printer(philo->id, MESSAGE_FORK, philo->infos);
 	if (philo->infos->started == 0)

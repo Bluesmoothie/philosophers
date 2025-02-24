@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:10:48 by ygille            #+#    #+#             */
-/*   Updated: 2025/02/20 14:29:24 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/24 08:42:03 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	*philo_thread(void *arg)
 
 void	philo_eat(t_philo *philo)
 {
+	if (philo->infos->nb_philo == 1)
+		return (philo_solo(philo));
 	sem_wait(philo->infos->forks);
 	message_printer(philo->id, MESSAGE_FORK, philo->infos);
 	sem_wait(philo->infos->forks);

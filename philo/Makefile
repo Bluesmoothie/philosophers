@@ -18,6 +18,7 @@ INCLUDE 		=	include/
 SRC_FILES		=	philo	\
 					mutex	\
 					print	\
+					solo	\
 					thread	\
 					utils	\
 					verif	\
